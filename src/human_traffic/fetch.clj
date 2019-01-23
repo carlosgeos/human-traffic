@@ -41,4 +41,5 @@
   "Fetches data from the API and stores the record in a database. Rooms
   are all the different URL endpoints from which to fetch data"
   [s]
-  (insert-record rooms))
+  (insert-record rooms)
+  "Done")
