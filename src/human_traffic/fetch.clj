@@ -4,12 +4,8 @@
   (:require [clj-http.client :as client]
             [clojure.java.jdbc :as j]
             [environ.core :refer [env]]
+            [human-traffic.common :as common]
             [java-time :as t]))
-
-(def database-url
-  (env :database-url))
-
-(def db-spec (str database-url "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory"))
 
 (def rooms {:nb "https://webapi.affluences.com/api/fillRate?token=UBK1jbZGtvLFO1&uuid=0a29d432-8814-4ac3-9010-b4958904e814"
             :ax "https://webapi.affluences.com/api/fillRate?token=LZdnFCQiXCzLAy&uuid=602bd735-dff2-4320-b95a-fa3280afafc3"
@@ -34,7 +30,7 @@
 (defn insert-record
   "Insert percentage info + timestamp in the database"
   [rooms]
-  (j/insert! db-spec :people
+  (j/insert! common/db :people
              (merge {:ts (t/local-date-time)} (get-percents rooms))))
 
 (defn -handler
