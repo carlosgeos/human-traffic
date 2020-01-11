@@ -1,6 +1,8 @@
 (ns human-traffic.common
   (:gen-class)
-  (:require [environ.core :refer [env]]))
+  (:require [environ.core :refer [env]]
+            [somnium.congomongo :as m]))
 
-(def db (str (env :database-url)
-             "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory"))
+(def sg-api-token (str "Bearer " (env :sendgrid-api-token)))
+(def conn
+  (m/make-connection (str (env :database-url))))
